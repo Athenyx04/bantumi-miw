@@ -126,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.ok, null)
                         .show();
                 return true;
+            case R.id.opcReiniciarPartida:
+                RestartAlertDialog alertDialog = new RestartAlertDialog();
+                alertDialog.show(getSupportFragmentManager(), "ConfirmRestartDialog");
+                return true;
 
             // @TODO!!! resto opciones
 
