@@ -36,4 +36,5 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-core:$lifecycle_version"
+    implementation 'androidx.preference:preference:1.2.0'
 }
