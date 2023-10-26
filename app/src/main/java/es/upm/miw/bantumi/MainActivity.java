@@ -1,12 +1,15 @@
 package es.upm.miw.bantumi;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.FileOutputStream;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
@@ -130,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 RestartAlertDialog alertDialog = new RestartAlertDialog();
                 alertDialog.show(getSupportFragmentManager(), "ConfirmRestartDialog");
                 return true;
+            case R.id.opcGuardarPartida:
+                saveGameAction();
+                return true;
 
             // @TODO!!! resto opciones
 
@@ -204,5 +211,85 @@ public class MainActivity extends AppCompatActivity {
 
         // terminar
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
+    }
+
+    /**
+     * Devuelve el nombre del fichero de partidas guardadas
+     *
+     * @return nombre del fichero
+     */
+    private String getSavedGamesFileName() {
+        String fileName = getString(R.string.default_SavedGamesFileName);
+        Log.i(LOG_TAG, "Nombre fichero partidas guardadas: " + fileName);
+
+        return fileName;
+    }
+
+    /**
+     * Determina si prefiere memoria interna o externa
+     *
+     * @return valor lógico
+     */
+    private boolean useInternalStorage() {
+        /*boolean utilizarMemInterna = !preferencias.getBoolean(
+                getString(R.string.key_TarjetaSD),
+                getResources().getBoolean(R.bool.default_prefTarjetaSD)
+        );
+        Log.i(LOG_TAG, "Memoria SD: " + ((!utilizarMemInterna) ? "ON" : "OFF"));*/
+        // TODO
+
+        return true;
+    }
+
+    /**
+     * Al pulsar el botón añadir → añadir al fichero.
+     * Después de añadir → mostrarContenido()
+     *
+     * @param v Botón Enviar (btBotonEnviar)
+     */
+    private void saveGameAction() {
+        FileOutputStream fos;
+
+        try {  // Add to file
+            if (useInternalStorage()) {
+                fos = openFileOutput(getSavedGamesFileName(), Context.MODE_PRIVATE); // Memoria interna
+            } else {    // Comprobar estado SD card
+                String sdCardStatus = Environment.getExternalStorageState();
+                if (sdCardStatus.equals(Environment.MEDIA_MOUNTED)) {
+                    String filePath = getExternalFilesDir(null) + "/" + getSavedGamesFileName();
+                    fos = new FileOutputStream(filePath, true);
+                } else {
+                    Toast.makeText(
+                            this,
+                            getString(R.string.txtExternalStorageError),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    return;
+                }
+            }
+
+            // Escribir fichero
+            fos.write(juegoBantumi.serializa().getBytes());
+            fos.write('\n');
+            fos.close();
+            Log.i(LOG_TAG, "Click botón Guardar -> AÑADIR al fichero");
+
+            // Toast éxito
+            Toast.makeText(
+                    this,
+                    getString(R.string.txtSaveGameSuccess),
+                    Toast.LENGTH_SHORT
+            ).show();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "FILE I/O ERROR: " + e.getMessage());
+            e.printStackTrace();
+
+            // Toast error
+            Toast.makeText(
+                    this,
+                    getString(R.string.txtSaveGameFailure),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 }

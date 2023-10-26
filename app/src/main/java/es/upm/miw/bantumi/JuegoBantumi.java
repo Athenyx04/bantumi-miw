@@ -2,6 +2,10 @@ package es.upm.miw.bantumi;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import es.upm.miw.bantumi.model.BantumiViewModel;
 
 public class JuegoBantumi {
@@ -192,8 +196,23 @@ public class JuegoBantumi {
      * @return juego serializado
      */
     public String serializa() {
-        // @TODO
-        return null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("turn", turnoActual().toString());
+
+            JSONArray positions = new JSONArray();
+            for (int i = 0; i < NUM_POSICIONES; i++) {
+                positions.put(getSemillas(i));
+            }
+
+            jsonObject.put("positions", positions);
+
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.i("MiW", "Error al serializar");
+            return "";
+        }
     }
 
     /**
@@ -202,6 +221,18 @@ public class JuegoBantumi {
      * @param juegoSerializado cadena que representa el estado completo del juego
      */
     public void deserializa(String juegoSerializado) {
-        // @TODO
+        try {
+            JSONObject jsonObject = new JSONObject(juegoSerializado);
+            Turno turn = Turno.valueOf(jsonObject.getString("turn"));
+            setTurno(turn);
+
+            JSONArray positions = jsonObject.getJSONArray("positions");
+            for (int i = 0; i < NUM_POSICIONES; i++) {
+                setSemillas(i, positions.getInt(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.i("MiW", "Error al deserializar");
+        }
     }
 }
