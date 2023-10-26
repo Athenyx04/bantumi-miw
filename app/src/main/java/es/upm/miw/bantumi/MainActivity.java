@@ -18,7 +18,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
@@ -137,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcGuardarPartida:
                 saveGameAction();
                 return true;
+            case R.id.opcRecuperarPartida:
+                loadGameAction();
+                return true;
 
             // @TODO!!! resto opciones
 
@@ -236,36 +245,80 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getBoolean(R.bool.default_prefTarjetaSD)
         );
         Log.i(LOG_TAG, "Memoria SD: " + ((!utilizarMemInterna) ? "ON" : "OFF"));*/
-        // TODO
+        // @TODO
 
         return true;
     }
 
     /**
-     * Al pulsar el botón añadir → añadir al fichero.
-     * Después de añadir → mostrarContenido()
+     * Devuelve el stream de escritura para un fichero especificado
      *
-     * @param v Botón Enviar (btBotonEnviar)
+     * @param fileName Nombre del fichero en el que escribir
+     * @param append Booleano que sobreescribe el fichero si false, añade si true
      */
-    private void saveGameAction() {
-        FileOutputStream fos;
-
-        try {  // Add to file
+    private FileOutputStream getFileOutputStream(String fileName, boolean append) {
+        try {
             if (useInternalStorage()) {
-                fos = openFileOutput(getSavedGamesFileName(), Context.MODE_PRIVATE); // Memoria interna
+                return openFileOutput(fileName, append ? Context.MODE_APPEND : Context.MODE_PRIVATE); // Memoria interna
             } else {    // Comprobar estado SD card
                 String sdCardStatus = Environment.getExternalStorageState();
                 if (sdCardStatus.equals(Environment.MEDIA_MOUNTED)) {
-                    String filePath = getExternalFilesDir(null) + "/" + getSavedGamesFileName();
-                    fos = new FileOutputStream(filePath, true);
+                    String filePath = getExternalFilesDir(null) + "/" + fileName;
+                    return new FileOutputStream(filePath, append);
                 } else {
                     Toast.makeText(
                             this,
                             getString(R.string.txtExternalStorageError),
                             Toast.LENGTH_SHORT
                     ).show();
-                    return;
                 }
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "FILE I/O ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Devuelve el stream de lectura para un fichero especificado
+     *
+     * @param fileName Nombre del fichero a leer
+     */
+    private BufferedReader getInputBufferedReader(String fileName) {
+        try {
+            if (useInternalStorage()) {
+                return new BufferedReader(new InputStreamReader(openFileInput(fileName))); // Memoria interna
+            } else {    // Comprobar estado SD card
+                String sdCardStatus = Environment.getExternalStorageState();
+                if (sdCardStatus.equals(Environment.MEDIA_MOUNTED)) {
+                    String filePath = getExternalFilesDir(null) + "/" + fileName;
+                    return new BufferedReader(new FileReader(filePath));
+                } else {
+                    Toast.makeText(
+                            this,
+                            getString(R.string.txtExternalStorageError),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "FILE I/O ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Al pulsar el botón Guardar → añadir al fichero.
+     */
+    private void saveGameAction() {
+        try {  // Add to file
+            FileOutputStream fos = getFileOutputStream(getSavedGamesFileName(), false);
+            if (fos == null) {
+                return;
             }
 
             // Escribir fichero
@@ -288,6 +341,57 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(
                     this,
                     getString(R.string.txtSaveGameFailure),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    /**
+     * Al pulsar el botón Cargar → leer el fichero.
+     */
+    private void loadGameAction() {
+        try {
+            BufferedReader fin = getInputBufferedReader(getSavedGamesFileName());
+            if (fin == null) {
+                // Toast fichero vacío
+                Toast.makeText(
+                        this,
+                        getString(R.string.txtLoadGameEmpty),
+                        Toast.LENGTH_SHORT
+                ).show();
+                return;
+            }
+
+            // Leer fichero
+            String saveData = fin.readLine();
+            fin.close();
+            Log.i(LOG_TAG, "Click botón Cargar -> CARGA los datos del fichero");
+
+            if (saveData != null) {
+                juegoBantumi.deserializa(saveData);
+
+                // Toast éxito
+                Toast.makeText(
+                        this,
+                        getString(R.string.txtLoadGameSuccess),
+                        Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                // Toast fichero vacío
+                Toast.makeText(
+                        this,
+                        getString(R.string.txtLoadGameEmpty),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "FILE I/O ERROR: " + e.getMessage());
+            e.printStackTrace();
+
+            // Toast error
+            Toast.makeText(
+                    this,
+                    getString(R.string.txtLoadGameFailure),
                     Toast.LENGTH_SHORT
             ).show();
         }
