@@ -57,4 +57,9 @@
     <string name="txtSaveGameSuccess">Partida guardada con éxito</string>
     <string name="txtSaveGameFailure">ERROR: No ha sido posible guardar la partida</string>
 
+    <!-- Cargar Partida -->
+    <string name="txtLoadGameSuccess">Partida cargada con éxito</string>
+    <string name="txtLoadGameFailure">ERROR: No ha sido posible cargar la partida</string>
+    <string name="txtLoadGameEmpty">No existen partidas guardadas</string>
+
 </resources>
