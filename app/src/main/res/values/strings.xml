@@ -46,7 +46,15 @@
     <!-- Diálogo Final -->
     <string name="txtDialogoFinalTitulo">Fin del juego</string>
     <string name="txtDialogoFinalPregunta">¿Desea jugar otra partida?</string>
+
+    <!-- Reiniciar Partida -->
     <string name="txtDialogoReiniciarTitulo">Reiniciar partida</string>
     <string name="txtDialogoReiniciarPregunta">¿Desea reiniciar la partida?</string>
+
+    <!-- Guardar Partida -->
+    <string name="default_SavedGamesFileName">saved_games.txt</string>
+    <string name="txtExternalStorageError">ERROR: No es posible acceder a la memoria externa</string>
+    <string name="txtSaveGameSuccess">Partida guardada con éxito</string>
+    <string name="txtSaveGameFailure">ERROR: No ha sido posible guardar la partida</string>
 
 </resources>
