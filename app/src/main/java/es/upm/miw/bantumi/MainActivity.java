@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = getSharedPreferences("es.upm.miw.bantumi_preferences",
+                Context.MODE_PRIVATE);
 
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = Integer.parseInt(preferences.getString(getString(R.string.key_SeedNumber),
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = getSharedPreferences("es.upm.miw.bantumi_preferences",
+                Context.MODE_PRIVATE);
 
         String prefPlayerName = preferences.getString(
                 getString(R.string.key_PlayerName),
