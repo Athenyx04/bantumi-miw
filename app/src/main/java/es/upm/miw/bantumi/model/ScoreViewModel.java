@@ -17,7 +17,7 @@ public class ScoreViewModel extends AndroidViewModel {
         mTopTenScores = mRepository.getTopTenScores();
     }
 
-    LiveData<List<Score>> getTopTenScores() { return mTopTenScores; }
+    public LiveData<List<Score>> getTopTenScores() { return mTopTenScores; }
 
     public void insert(Score score) { mRepository.insert(score); }
 
