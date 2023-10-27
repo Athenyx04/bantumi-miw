@@ -39,6 +39,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     //Room
     implementation "androidx.room:room-runtime:$roomVersion"
+    implementation 'androidx.room:room-common:2.6.0'
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     // Preferences
     implementation 'androidx.preference:preference:1.2.0'

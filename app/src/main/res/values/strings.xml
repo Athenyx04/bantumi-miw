@@ -44,9 +44,26 @@
     <string name="prefTituloCategoria2">Ajustes del juego</string>
     <string name="prefTituloCategoria3">Más información…</string>
     <string name="key_PlayerName">pref_PlayerName</string>
+    <string name="key_SeedNumber">pref_SeedNumber</string>
     <string name="key_UseExternalStorage">pref_UseExternalStorage</string>
     <string name="default_PlayerName">Jugador 1</string>
+    <string name="default_SeedNumber">4</string>
     <string name="prefTitleUseExternalStorage">Usar almacenamiento externo</string>
+    <string name="prefTitleSeedNumber">Número de semillas</string>
+    <string-array name="seeds_options">
+        <item>2 Semillas</item>
+        <item>3 Semillas</item>
+        <item>4 Semillas</item>
+        <item>5 Semillas</item>
+        <item>6 Semillas</item>
+    </string-array>
+    <string-array name="seeds_values">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
 
     <!-- Diálogo Final -->
     <string name="txtDialogoFinalTitulo">Fin del juego</string>
@@ -67,4 +84,8 @@
     <string name="txtLoadGameFailure">ERROR: No ha sido posible cargar la partida</string>
     <string name="txtLoadGameEmpty">No existen partidas guardadas</string>
 
+    <!-- Mejores 10 Resultados -->
+    <string name="title_activity_topten">Mejores 10 Resultados</string>
+    <string name="txtDialogoEliminarResultadosTitulo">Eliminar resultados</string>
+    <string name="txtDialogoEliminarResultadosPregunta">¿Está seguro de que desea eliminar todos los resultados almacenados? Esta acción es irreversible.</string>
 </resources>
