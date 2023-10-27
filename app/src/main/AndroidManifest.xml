@@ -13,6 +13,10 @@
         android:theme="@style/Theme.Bantumi"
         tools:targetApi="s">
         <activity
+            android:name=".TopTenActivity"
+            android:exported="false"
+            android:label="@string/title_activity_topten" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
