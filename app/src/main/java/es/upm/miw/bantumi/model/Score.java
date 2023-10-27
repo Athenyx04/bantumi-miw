@@ -50,4 +50,8 @@ public class Score {
     public int getSeedsOpponent() {
         return seedsOpponent;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

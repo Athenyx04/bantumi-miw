@@ -28,15 +28,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.model.Score;
+import es.upm.miw.bantumi.model.ScoreViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     protected final String LOG_TAG = "MiW";
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
+    ScoreViewModel scoreVM;
     int numInicialSemillas;
     SharedPreferences preferences;
 
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
+        scoreVM = new ViewModelProvider(this).get(ScoreViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
     }
@@ -241,7 +246,15 @@ public class MainActivity extends AppCompatActivity {
         )
         .show();
 
-        // @TODO guardar puntuación
+        scoreVM.insert(new Score(
+                preferences.getString(
+                        getString(R.string.key_PlayerName),
+                        getString(R.string.default_PlayerName)
+                ),
+                new Date().toString(),
+                juegoBantumi.getSemillas(6),
+                juegoBantumi.getSemillas(13)
+        ));
 
         // terminar
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
