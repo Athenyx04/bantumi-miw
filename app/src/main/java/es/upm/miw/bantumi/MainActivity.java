@@ -2,8 +2,11 @@ package es.upm.miw.bantumi;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,16 +28,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.model.Score;
+import es.upm.miw.bantumi.model.ScoreViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     protected final String LOG_TAG = "MiW";
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
+    ScoreViewModel scoreVM;
     int numInicialSemillas;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +52,30 @@ public class MainActivity extends AppCompatActivity {
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
+        scoreVM = new ViewModelProvider(this).get(ScoreViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String prefPlayerName = preferences.getString(
+                getString(R.string.key_PlayerName),
+                getString(R.string.default_PlayerName)
+        );
+        boolean prefUseExternalStorage = preferences.getBoolean(
+                getString(R.string.key_UseExternalStorage),
+                getResources().getBoolean(R.bool.default_UseExternalStorage)
+        );
+
+        TextView tvJugador1 = findViewById(R.id.tvPlayer1);
+        tvJugador1.setText(prefPlayerName);
+
+        Log.i(LOG_TAG, "onRESUME(): Player Name = " + prefPlayerName);
+        Log.i(LOG_TAG, "Use External Storage = " + ((prefUseExternalStorage) ? "ON" : "OFF"));
     }
 
     /**
@@ -126,9 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.opcAjustes: // @todo Preferencias
-//                startActivity(new Intent(this, BantumiPrefs.class));
-//                return true;
             case R.id.opcAcercaDe:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.aboutTitle)
@@ -145,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.opcRecuperarPartida:
                 loadGameAction();
+                return true;
+            case R.id.opcAjustes:
+                editPreferences();
                 return true;
 
             // @TODO!!! resto opciones
@@ -216,7 +246,15 @@ public class MainActivity extends AppCompatActivity {
         )
         .show();
 
-        // @TODO guardar puntuación
+        scoreVM.insert(new Score(
+                preferences.getString(
+                        getString(R.string.key_PlayerName),
+                        getString(R.string.default_PlayerName)
+                ),
+                new Date().toString(),
+                juegoBantumi.getSemillas(6),
+                juegoBantumi.getSemillas(13)
+        ));
 
         // terminar
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
@@ -240,14 +278,10 @@ public class MainActivity extends AppCompatActivity {
      * @return valor lógico
      */
     private boolean useInternalStorage() {
-        /*boolean utilizarMemInterna = !preferencias.getBoolean(
-                getString(R.string.key_TarjetaSD),
-                getResources().getBoolean(R.bool.default_prefTarjetaSD)
+        return preferences.getBoolean(
+                getString(R.string.key_UseExternalStorage),
+                getResources().getBoolean(R.bool.default_UseExternalStorage)
         );
-        Log.i(LOG_TAG, "Memoria SD: " + ((!utilizarMemInterna) ? "ON" : "OFF"));*/
-        // @TODO
-
-        return true;
     }
 
     /**
@@ -395,5 +429,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT
             ).show();
         }
+    }
+
+    private void editPreferences() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }
