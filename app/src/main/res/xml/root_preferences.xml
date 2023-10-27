@@ -12,6 +12,16 @@
 
     <PreferenceCategory app:title="@string/prefTituloCategoria2">
 
+        <ListPreference
+            app:key="@string/key_SeedNumber"
+            app:title="@string/prefTitleSeedNumber"
+            app:entries="@array/seeds_options"
+            app:entryValues="@array/seeds_values"
+            app:defaultValue="4"
+            app:useSimpleSummaryProvider="true"
+            />
+
+
         <SwitchPreferenceCompat
             app:key="@string/key_UseExternalStorage"
             app:title="@string/prefTitleUseExternalStorage" />
