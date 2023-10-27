@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 getString(R.string.default_SeedNumber)));
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         scoreVM = new ViewModelProvider(this).get(ScoreViewModel.class);
-        juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
+        juegoBantumi = new JuegoBantumi(bantumiVM, getPreferredTurnStart(), numInicialSemillas);
         crearObservadores();
     }
 
@@ -449,5 +448,16 @@ public class MainActivity extends AppCompatActivity {
     private void showTopTenScores() {
         Intent intent = new Intent(this, TopTenActivity.class);
         startActivity(intent);
+    }
+
+    public JuegoBantumi.Turno getPreferredTurnStart() {
+        if (preferences == null) {
+            return JuegoBantumi.Turno.turnoJ1;
+        }
+
+        if (preferences.getBoolean(getString(R.string.key_Player2Start), false)) {
+            return JuegoBantumi.Turno.turnoJ2;
+        }
+        return JuegoBantumi.Turno.turnoJ1;
     }
 }

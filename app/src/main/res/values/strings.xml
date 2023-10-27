@@ -64,6 +64,8 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+    <string name="key_Player2Start">pref_Player2Start</string>
+    <string name="prefTitlePlayer2Start">Primer turno de Jugador 2</string>
 
     <!-- Diálogo Final -->
     <string name="txtDialogoFinalTitulo">Fin del juego</string>

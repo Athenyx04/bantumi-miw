@@ -21,6 +21,9 @@
             app:useSimpleSummaryProvider="true"
             />
 
+        <SwitchPreferenceCompat
+            app:key="@string/key_Player2Start"
+            app:title="@string/prefTitlePlayer2Start" />
 
         <SwitchPreferenceCompat
             app:key="@string/key_UseExternalStorage"
