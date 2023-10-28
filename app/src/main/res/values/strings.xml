@@ -66,6 +66,8 @@
     </string-array>
     <string name="key_Player2Start">pref_Player2Start</string>
     <string name="prefTitlePlayer2Start">Primer turno de Jugador 2</string>
+    <string name="key_UseSecondaryTheme">pref_UseSecondaryTheme</string>
+    <string name="prefTitleUseSecondaryTheme">Usar tema secundario</string>
 
     <!-- Diálogo Final -->
     <string name="txtDialogoFinalTitulo">Fin del juego</string>
@@ -90,4 +92,5 @@
     <string name="title_activity_topten">Mejores 10 Resultados</string>
     <string name="txtDialogoEliminarResultadosTitulo">Eliminar resultados</string>
     <string name="txtDialogoEliminarResultadosPregunta">¿Está seguro de que desea eliminar todos los resultados almacenados? Esta acción es irreversible.</string>
+    <string name="preferencesFile">es.upm.miw.bantumi_preferences</string>
 </resources>

@@ -42,14 +42,21 @@ public class MainActivity extends AppCompatActivity {
     ScoreViewModel scoreVM;
     int numInicialSemillas;
     SharedPreferences preferences;
+    private boolean isSecondaryTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        preferences = getSharedPreferences("es.upm.miw.bantumi_preferences",
+        preferences = getSharedPreferences(getString(R.string.preferencesFile),
                 Context.MODE_PRIVATE);
+        isSecondaryTheme = ThemePreferenceHelper.getThemeMode(this);
+        if (isSecondaryTheme) {
+            setTheme(R.style.Theme_Bantumi_Purple);
+        } else {
+            setTheme(R.style.Theme_Bantumi);
+        }
 
+        setContentView(R.layout.activity_main);
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = Integer.parseInt(preferences.getString(getString(R.string.key_SeedNumber),
                 getString(R.string.default_SeedNumber)));
@@ -63,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        preferences = getSharedPreferences("es.upm.miw.bantumi_preferences",
+        if (isSecondaryTheme != ThemePreferenceHelper.getThemeMode(this)) {
+            recreate();
+        }
+
+        preferences = getSharedPreferences(getString(R.string.preferencesFile),
                 Context.MODE_PRIVATE);
 
         String prefPlayerName = preferences.getString(
