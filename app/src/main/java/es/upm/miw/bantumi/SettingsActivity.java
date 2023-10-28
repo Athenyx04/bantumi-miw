@@ -11,6 +11,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (ThemePreferenceHelper.getThemeMode(this)) {
+            setTheme(R.style.Theme_Bantumi_Purple);
+        } else {
+            setTheme(R.style.Theme_Bantumi);
+        }
         setContentView(R.layout.settings_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager()

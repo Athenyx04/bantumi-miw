@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txtPlayer1">Player 1</string>
+    <string name="txtPlayer2">Player 2</string>
+    <string name="txtSinImplementar">Not implemented yet!</string>
+    <string name="txtReiniciarPartida">Restart</string>
+    <string name="txtOpcionGuardar">Save Game</string>
+    <string name="txtOpcionRecuperar">Load Game</string>
+    <string name="txtOpcionMejoresResultados">High Scores</string>
+    <string name="aboutText">About</string>
+    <string name="aboutTitle">How to play</string>
+    <string name="preferencesText">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="prefTituloCategoria1">Personal Data</string>
+    <string name="prefTituloNombreJugador">Player Name</string>
+    <string name="prefTextoNombreJugador">Press to type the player name</string>
+    <string name="prefTituloCategoria2">Game Settings</string>
+    <string name="prefTituloCategoria3">More information...</string>
+    <string name="default_PlayerName">Player 1</string>
+    <string name="prefTitleUseExternalStorage">Use external storage</string>
+    <string name="prefTitleSeedNumber">Initial seed number</string>
+    <string name="prefTitlePlayer2Start">Player 2 starts the game</string>
+    <string name="prefTitleUseSecondaryTheme">Use secondary theme</string>
+    <string name="txtDialogoFinalTitulo">Game end</string>
+    <string name="txtDialogoFinalPregunta">Do you want to play again?</string>
+    <string name="txtDialogoReiniciarTitulo">Restart game</string>
+    <string name="txtDialogoReiniciarPregunta">Do you want to restart the game?</string>
+    <string name="txtExternalStorageError">ERROR: External storage access has failed</string>
+    <string name="txtSaveGameSuccess">Game saved successfully</string>
+    <string name="txtSaveGameFailure">ERROR: Game save failed</string>
+    <string name="txtLoadGameSuccess">Game loaded successfully</string>
+    <string name="txtLoadGameFailure">ERROR: Game load failed</string>
+    <string name="txtLoadGameEmpty">No saved games found</string>
+    <string name="title_activity_topten">Top 10 Scores</string>
+    <string name="txtDialogoEliminarResultadosTitulo">Delete scores</string>
+    <string name="txtDialogoEliminarResultadosPregunta">Are you sure you want to delete all saved scores? This action cannot be undone.</string>
+    <string name="aboutMessage"><p>Each player chooses one of their 6 boxes - which cannot be empty -, picks up all the seeds it contains, and \"plants\" them one by one counterclockwise in the following boxes on the board (except in the opponent\'s store). The following rules apply:</p> <ul>     <li>If the sowing ends in the player\'s store, the player gets another turn</li>     <li>If the sowing ends in one\'s own box that was empty, the player places the last seed and those in the opposite box of the other player into their own store</li>     <li>The game ends when either of the two players has all their boxes empty. If the opponent has seeds, they will be moved to the owner\'s store of the boxes</li> </ul> <p>The player who accumulates the most seeds in their store wins.</p></string>
+</resources>

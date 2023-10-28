@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.R;
@@ -24,9 +27,11 @@ public class ScoreViewHolder extends RecyclerView.ViewHolder {
         scoreItemFinalScore = itemView.findViewById(R.id.tv_finalScore);
     }
 
-    public void bind(Score score) {
+    public void bind(Score score) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+        Date parsedDate = dateFormat.parse(score.getDateTime());
         scoreItemPlayerName.setText(score.getPlayerName());
-        scoreItemDateTime.setText(score.getDateTime());
+        scoreItemDateTime.setText(SimpleDateFormat.getDateTimeInstance().format(parsedDate));
         scoreItemFinalScore.setText(String.format(
                 Locale.getDefault(),
                 "%02d - %02d",

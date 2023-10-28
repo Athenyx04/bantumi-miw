@@ -1,13 +1,11 @@
 <resources>
-    <string name="app_name">Bantumi</string>
+    <string name="app_name" translatable="false">Bantumi</string>
 
     <string name="txtPlayer1">Jugador 1</string>
     <string name="txtPlayer2">Jugador 2</string>
-    <string name="txtBtnReset">Reset</string>
 
     <!-- Valores del juego -->
-    <integer name="intNumInicialSemillas">4</integer>
-    <string name="txtInitialScore">0</string>
+    <string name="txtInitialScore" translatable="false">0</string>
 
     <!-- Mensaje opción sin implementar -->
     <string name="txtSinImplementar">¡No implementado aún!</string>
@@ -43,11 +41,11 @@
     <string name="prefTextoNombreJugador">Pulse para teclear el nombre del jugador</string>
     <string name="prefTituloCategoria2">Ajustes del juego</string>
     <string name="prefTituloCategoria3">Más información…</string>
-    <string name="key_PlayerName">pref_PlayerName</string>
-    <string name="key_SeedNumber">pref_SeedNumber</string>
-    <string name="key_UseExternalStorage">pref_UseExternalStorage</string>
+    <string name="key_PlayerName" translatable="false">pref_PlayerName</string>
+    <string name="key_SeedNumber" translatable="false">pref_SeedNumber</string>
+    <string name="key_UseExternalStorage" translatable="false">pref_UseExternalStorage</string>
     <string name="default_PlayerName">Jugador 1</string>
-    <string name="default_SeedNumber">4</string>
+    <string name="default_SeedNumber" translatable="false">4</string>
     <string name="prefTitleUseExternalStorage">Usar almacenamiento externo</string>
     <string name="prefTitleSeedNumber">Número de semillas</string>
     <string-array name="seeds_options">
@@ -64,6 +62,11 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+    <string name="key_Player2Start" translatable="false">pref_Player2Start</string>
+    <string name="prefTitlePlayer2Start">Primer turno de Jugador 2</string>
+    <string name="key_UseSecondaryTheme" translatable="false">pref_UseSecondaryTheme</string>
+    <string name="prefTitleUseSecondaryTheme">Usar tema secundario</string>
+    <string name="preferencesFile" translatable="false">es.upm.miw.bantumi_preferences</string>
 
     <!-- Diálogo Final -->
     <string name="txtDialogoFinalTitulo">Fin del juego</string>
@@ -74,7 +77,7 @@
     <string name="txtDialogoReiniciarPregunta">¿Desea reiniciar la partida?</string>
 
     <!-- Guardar Partida -->
-    <string name="default_SavedGamesFileName">saved_games.txt</string>
+    <string name="default_SavedGamesFileName" translatable="false">saved_games.txt</string>
     <string name="txtExternalStorageError">ERROR: No es posible acceder a la memoria externa</string>
     <string name="txtSaveGameSuccess">Partida guardada con éxito</string>
     <string name="txtSaveGameFailure">ERROR: No ha sido posible guardar la partida</string>

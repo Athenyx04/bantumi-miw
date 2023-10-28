@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import java.text.ParseException;
+
 import es.upm.miw.bantumi.model.Score;
 
 public class ScoreListAdapter extends ListAdapter<Score, ScoreViewHolder> {
@@ -21,7 +23,11 @@ public class ScoreListAdapter extends ListAdapter<Score, ScoreViewHolder> {
     @Override
     public void onBindViewHolder(ScoreViewHolder holder, int position) {
         Score current = getItem(position);
-        holder.bind(current);
+        try {
+            holder.bind(current);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static class ScoreDiff extends DiffUtil.ItemCallback<Score> {

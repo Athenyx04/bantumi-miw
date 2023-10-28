@@ -24,11 +24,10 @@ public class JuegoBantumi {
     }
 
     // Número inicial de semillas
-    private final int numInicialSemillas;
+    public int numInicialSemillas;
 
     /**
      * Constructor
-     *
      * Inicializa el modelo sólo si éste está vacío
      *
      * @param turno especifica el turno inicial <code>[Turno.turnoJ1 || Turno.turnoJ2]</code>
@@ -184,7 +183,7 @@ public class JuegoBantumi {
     /**
      * Establece el turno
      *
-     * @param turno
+     * @param turno Turno actual
      */
     public void setTurno(Turno turno) {
         bantumiVM.setTurno(turno);

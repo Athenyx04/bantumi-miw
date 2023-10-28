@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +21,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
@@ -43,17 +41,27 @@ public class MainActivity extends AppCompatActivity {
     ScoreViewModel scoreVM;
     int numInicialSemillas;
     SharedPreferences preferences;
+    private boolean isSecondaryTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        preferences = getSharedPreferences(getString(R.string.preferencesFile),
+                Context.MODE_PRIVATE);
+        isSecondaryTheme = ThemePreferenceHelper.getThemeMode(this);
+        if (isSecondaryTheme) {
+            setTheme(R.style.Theme_Bantumi_Purple);
+        } else {
+            setTheme(R.style.Theme_Bantumi);
+        }
 
+        setContentView(R.layout.activity_main);
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
-        numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
+        numInicialSemillas = Integer.parseInt(preferences.getString(getString(R.string.key_SeedNumber),
+                getString(R.string.default_SeedNumber)));
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         scoreVM = new ViewModelProvider(this).get(ScoreViewModel.class);
-        juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
+        juegoBantumi = new JuegoBantumi(bantumiVM, getPreferredTurnStart(), numInicialSemillas);
         crearObservadores();
     }
 
@@ -61,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (isSecondaryTheme != ThemePreferenceHelper.getThemeMode(this)) {
+            recreate();
+        }
+
+        preferences = getSharedPreferences(getString(R.string.preferencesFile),
+                Context.MODE_PRIVATE);
+
         String prefPlayerName = preferences.getString(
                 getString(R.string.key_PlayerName),
                 getString(R.string.default_PlayerName)
@@ -73,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tvJugador1 = findViewById(R.id.tvPlayer1);
         tvJugador1.setText(prefPlayerName);
+        juegoBantumi.numInicialSemillas = Integer.parseInt(preferences.getString(getString(R.string.key_SeedNumber),
+                getString(R.string.default_SeedNumber)));
 
         Log.i(LOG_TAG, "onRESUME(): Player Name = " + prefPlayerName);
         Log.i(LOG_TAG, "Use External Storage = " + ((prefUseExternalStorage) ? "ON" : "OFF"));
@@ -176,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcAjustes:
                 editPreferences();
                 return true;
-
-            // @TODO!!! resto opciones
-
+            case R.id.opcMejoresResultados:
+                showTopTenScores();
+                return true;
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -246,12 +262,16 @@ public class MainActivity extends AppCompatActivity {
         )
         .show();
 
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+        String iso8601String = dateFormat.format(date);
+
         scoreVM.insert(new Score(
                 preferences.getString(
                         getString(R.string.key_PlayerName),
                         getString(R.string.default_PlayerName)
                 ),
-                new Date().toString(),
+                iso8601String,
                 juegoBantumi.getSemillas(6),
                 juegoBantumi.getSemillas(13)
         ));
@@ -434,5 +454,21 @@ public class MainActivity extends AppCompatActivity {
     private void editPreferences() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    private void showTopTenScores() {
+        Intent intent = new Intent(this, TopTenActivity.class);
+        startActivity(intent);
+    }
+
+    public JuegoBantumi.Turno getPreferredTurnStart() {
+        if (preferences == null) {
+            return JuegoBantumi.Turno.turnoJ1;
+        }
+
+        if (preferences.getBoolean(getString(R.string.key_Player2Start), false)) {
+            return JuegoBantumi.Turno.turnoJ2;
+        }
+        return JuegoBantumi.Turno.turnoJ1;
     }
 }

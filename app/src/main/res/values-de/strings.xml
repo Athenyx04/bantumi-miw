@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txtPlayer1">Spieler 1</string>
+    <string name="txtPlayer2">Spieler 2</string>
+    <string name="txtSinImplementar">Noch nicht implementiert!</string>
+    <string name="txtReiniciarPartida">Neustart</string>
+    <string name="txtOpcionGuardar">Spiel speichern</string>
+    <string name="txtOpcionRecuperar">Spiel laden</string>
+    <string name="txtOpcionMejoresResultados">Hohe Punktzahlen</string>
+    <string name="aboutText">Über dieses Spiel</string>
+    <string name="aboutTitle">Wie spielt man?</string>
+    <string name="preferencesText">Einstellungen</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="prefTituloCategoria1">Persönliche Daten</string>
+    <string name="prefTituloNombreJugador">Spielername</string>
+    <string name="prefTextoNombreJugador">Drücken Sie, um den Spielernamen einzugeben</string>
+    <string name="prefTituloCategoria2">Spiel-Einstellungen</string>
+    <string name="prefTituloCategoria3">Weitere Informationen...</string>
+    <string name="default_PlayerName">Spieler 1</string>
+    <string name="prefTitleUseExternalStorage">Externen Speicher verwenden</string>
+    <string name="prefTitleSeedNumber">Ursprüngliche Saatgutnummer</string>
+    <string name="prefTitlePlayer2Start">Spieler 2 beginnt das Spiel</string>
+    <string name="prefTitleUseSecondaryTheme">Sekundäres Thema verwenden</string>
+    <string name="txtDialogoFinalTitulo">Spielende</string>
+    <string name="txtDialogoFinalPregunta">Willst du wieder spielen?</string>
+    <string name="txtDialogoReiniciarTitulo">Spiel neu starten</string>
+    <string name="txtDialogoReiniciarPregunta">Willst du das Spiel neu starten?</string>
+    <string name="txtExternalStorageError">ERROR: Externer Speicherzugriff ist fehlgeschlagen</string>
+    <string name="txtSaveGameSuccess">Spiel erfolgreich gespeichert</string>
+    <string name="txtSaveGameFailure">ERROR: Spielspeicherung fehlgeschlagen</string>
+    <string name="txtLoadGameSuccess">Spiel erfolgreich geladen</string>
+    <string name="txtLoadGameFailure">ERROR: Spiel wurde nicht geladen</string>
+    <string name="txtLoadGameEmpty">Keine gespeicherten Spiele gefunden</string>
+    <string name="title_activity_topten">Top-10-Ergebnisse</string>
+    <string name="txtDialogoEliminarResultadosTitulo">Spielstände löschen</string>
+    <string name="txtDialogoEliminarResultadosPregunta">Sind Sie sicher, dass Sie alle gespeicherten Spielstände löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.</string>
+    <string name="aboutMessage"><p>Jeder Spieler wählt eine seiner 6 Kisten - die nicht leer sein darf -, sammelt alle enthaltenen Samen auf und \"pflanzt\" sie nacheinander gegen den Uhrzeigersinn in die folgenden Kisten auf dem Spielfeld (außer im Lager des Gegners). Die folgenden Regeln gelten:</p> <ul>     <li>Wenn die Aussaat im eigenen Lager endet, hat der Spieler erneut das Zugrecht.</li>     <li>Wenn die Aussaat in einer eigenen leeren Kiste endet, legt der Spieler den letzten Samen und die in der gegenüberliegenden Kiste des anderen Spielers befindlichen Samen in sein eigenes Lager.</li>     <li>Das Spiel endet, sobald einer der beiden Spieler alle seine Kisten geleert hat. Wenn der Gegner Samen hat, werden diese in das Lager des Besitzers der Kisten verschoben.</li> </ul> <p>Der Spieler, der die meisten Samen in seinem Lager ansammelt, gewinnt.</p></string>
+</resources>
