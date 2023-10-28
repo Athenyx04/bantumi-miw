@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -263,15 +262,16 @@ public class MainActivity extends AppCompatActivity {
         )
         .show();
 
-        DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-        String formattedDate = dateFormat.format(new Date());
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz");
+        String iso8601String = dateFormat.format(date);
 
         scoreVM.insert(new Score(
                 preferences.getString(
                         getString(R.string.key_PlayerName),
                         getString(R.string.default_PlayerName)
                 ),
-                formattedDate,
+                iso8601String,
                 juegoBantumi.getSemillas(6),
                 juegoBantumi.getSemillas(13)
         ));
